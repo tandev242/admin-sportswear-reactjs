@@ -16,20 +16,18 @@ const buildNewCategories = (parentId, categories, category) => {
                 _id: category._id,
                 name: category.name,
                 slug: category.slug,
-                type: category.type,
                 children: []
             }
         ];
     }
 
     for (let cat of categories) {
-        if (cat._id === parentId) {
+        if (cat._id == parentId) {
             const newCat = {
                 _id: category._id,
                 name: category.name,
                 parentId: category.parentId,
                 slug: category.slug,
-                type: category.type,
                 children: []
             }
             myCategories.push({
@@ -43,6 +41,7 @@ const buildNewCategories = (parentId, categories, category) => {
             });
         }
     }
+    return myCategories;
 }
 
 
@@ -84,7 +83,7 @@ export default (state = initState, action) => {
                 loading: true
             }
             break;
-        case categoryConstants.DELETE_CATEGORIES_REQUEST:
+        case categoryConstants.DELETE_CATEGORIES_SUCCESS:
             state = {
                 ...state,
                 loading: false

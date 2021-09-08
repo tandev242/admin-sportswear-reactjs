@@ -1,42 +1,62 @@
 import { authConstants } from "./constants";
-import axios from 'axios';
+import axios from '../helpers/axios';
 
-export const isUserLoggedIn = () => {
-    return async dispatch => {
-        const res = await axios.get('/api/current_user');
-        if (res.data) {
-            const user = res.data;
-            if (!localStorage.getItem('user')) {
-                localStorage.setItem('user', JSON.stringify(user));
-            }
+export const login = (user) => {
+    return async (dispatch) => {
+        dispatch({ type: authConstants.LOGIN_REQUEST });
+        const res = await axios.post(`/signin`, { ...user });
+
+        if (res.status === 200) {
+            const {token, user } = res.data;
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('token', token);
             dispatch({
                 type: authConstants.LOGIN_SUCCESS,
                 payload: {
-                    user
+                    token, user
                 }
             });
         } else {
-            dispatch({
-                type: authConstants.LOGIN_FAILURE,
-                payload: { error: 'Failed to login' }
-            });
+            if (res.status === 400) {
+                dispatch({
+                    type: authConstants.LOGIN_FAILURE,
+                    payload: { error: res.data.error }
+                });
+            }
         }
     }
 }
 
+export const isUserLoggedIn = () => {
+    return async (dispatch) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            dispatch({
+                type: authConstants.LOGIN_SUCCESS,
+                payload: { user, token }
+            });
+        } else {
+            dispatch({
+                type: authConstants.LOGIN_FAILURE,
+                payload: { error: " Failed to login " }
+            })
+        }
+    }
+}
 
 export const signout = () => {
     return async dispatch => {
         dispatch({ type: authConstants.LOGOUT_REQUEST });
-        const res = await axios.get('/api/logout');
-        if (res.status === 200) {
+        const res = await axios.post(`/signout`);
+        if (res.status === 200) {   
             localStorage.clear();
-            dispatch({ type: authConstants.LOGOUT_SUCCESS });
+            dispatch({ type: authConstants.LOGOUT_SUCCESS })
         } else {
             dispatch({
                 type: authConstants.LOGOUT_FAILURE,
                 payload: { error: res.data.error }
-            });
+            })
         }
     }
 }

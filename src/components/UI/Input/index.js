@@ -25,7 +25,7 @@ const Input = (props) => {
             break;
         case 'text':
         default:
-            input = <Form.Group>
+            input = <Form.Group >
                 {props.label && <Form.Label>{props.label}</Form.Label>}
                 <Form.Control
                     type={props.type}

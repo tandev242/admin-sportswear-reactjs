@@ -1,0 +1,18 @@
+.table-user {
+    .title {
+        display: flex;
+        justify-content: space-between;
+    }
+    .btn-group-role{
+        margin-right: 10px;
+    }
+    .img-profile{
+        height: 40px;
+        width: 40px;
+        object-fit: cover;
+        margin: -15px 5px;
+    }
+    .col-name-sort{
+       cursor: pointer;
+    }
+}

@@ -1,6 +1,7 @@
-import React from 'react';
+import React ,{useEffect} from 'react';
 import { Jumbotron } from 'react-bootstrap';
 import Layout from '../../components/Layout';
+import axios from 'axios';
 
 const Home = (props) => {
     

@@ -1,11 +1,16 @@
-import React , {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router , Route , Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './containers/Home';
-import Category from './containers/Category';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInitialData, isUserLoggedIn } from './actions';
-import Products from './containers/Product';
+import { getInitData, isUserLoggedIn } from './actions';
+import Product from './containers/Product';
+import Signin from './containers/Signin';
+import Category from './containers/Category';
+import Brand from './containers/Brand';
+import PrivateRoute from './components/HOC/PrivateRoute';
+import User from './containers/User';
+
 
 
 function App() {
@@ -15,22 +20,25 @@ function App() {
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
-    }
-    if(auth.authenticate){
-      dispatch(getInitialData());
-      // dispatch(getProducts());
+    } else {
+      dispatch(getInitData());
     }
   }, [auth.authenticate]);
 
   return (
     <div className="App">
-        <Router>
-          <Switch>
-            <Route path="/" exact component = {Home}/>
-            <Route path="/category" component = {Category}/>
-            <Route path="/products" component = {Products}/>
-          </Switch>
-        </Router>
+      <Router>
+        <Switch>
+          <PrivateRoute path="/" exact component={Home} />
+          <PrivateRoute path="/category" component={Category} />
+          <PrivateRoute path="/product" component={Product} />
+          <PrivateRoute path="/brand" component={Brand} />
+          <PrivateRoute path="/user" component={User} />
+
+
+          <Route path="/signin" component={Signin} />
+        </Switch>
+      </Router>
     </div>
   );
 }

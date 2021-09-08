@@ -1,16 +1,12 @@
 import { authConstants } from '../actions/constants';
 
 const initState = {
-    user: {
-        googleId : '',
-        googleDisplayName : '',
-        googleEmail: '',
-        googlePhotos: ''
-    },
+    user: null,
     authenticate: false,
     authenticating: false,
     loading: false,
     error: null,
+    token: null,
     message: ''
 };
 export default (state = initState, action) => {
@@ -26,6 +22,7 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 user: action.payload.user,
+                token: action.payload.token,
                 authenticate: true,
                 authenticating: false
             }

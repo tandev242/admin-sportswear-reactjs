@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from "../helpers/axios";
 import { categoryConstants } from "./constants";
 
 export const getAllCategory = () => {
     return async dispatch => {
         dispatch({ type: categoryConstants.GET_ALL_CATEGORIES_REQUEST });
-        const res = await axios.get(`api/category/get`);
+        const res = await axios.get(`/category/getCategories`);
         if (res.status === 200) {
             const { categoryList } = res.data;
             dispatch({
@@ -24,7 +24,7 @@ export const addCategory = (form) => {
     return async dispatch => {
         dispatch({ type: categoryConstants.ADD_NEW_CATEGORY_REQUEST });
         try {
-            const res = await axios.post(`api/category/create`, form);
+            const res = await axios.post(`/category/add`, form);
             if (res.status === 201) {
                 dispatch({
                     type: categoryConstants.ADD_NEW_CATEGORY_SUCCESS,
@@ -45,7 +45,7 @@ export const addCategory = (form) => {
 export const deleteCategories = (ids) => {
     return async dispatch => {
         dispatch({ type: categoryConstants.DELETE_CATEGORIES_REQUEST })
-        const res = await axios.post(`api/category/delete`, {
+        const res = await axios.post(`/category/delete`, {
             payload: {
                 ids
             }
@@ -68,7 +68,7 @@ export const deleteCategories = (ids) => {
 export const updateCategories = (form) => {
     return async dispatch => {
         dispatch({ type: categoryConstants.UPDATE_CATEGORIES_REQUEST })
-        const res = await axios.post(`api/category/update`, form);
+        const res = await axios.post(`/category/update`, form);
         if (res.status === 201) {
             dispatch({ type: categoryConstants.UPDATE_CATEGORIES_SUCCESS });
             dispatch(getAllCategory());
