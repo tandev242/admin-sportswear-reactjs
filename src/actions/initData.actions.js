@@ -27,7 +27,7 @@ export const getInitData = () =>{
                 payload: { products }
             });
             dispatch({
-                type: orderConstants.GET_CUSTOMER_ORDER_SUCCESS,
+                type: orderConstants.GET_ALL_ORDERS_SUCCESS,
                 payload: { orders }
             });
             dispatch({

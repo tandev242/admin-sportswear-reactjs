@@ -30,14 +30,17 @@ export const getProductById = (productId) => {
 
       const res = await axios.get(`/product/${productId}`);
       if (res.status === 200) {
-        const { product, sizes } = res.data;
+        const { product, sizes,  } = res.data;
         //   console.log(products);
         dispatch({
           type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
           payload: { product, sizes },
         });
       } else {
-        dispatch({ type: productConstants.GET_ALL_PRODUCTS_FAILURE });
+        const {error} = res.data;
+        dispatch({
+          type: productConstants.GET_ALL_PRODUCTS_FAILURE, payload: { error }
+        });
       }
     } catch (error) {
       console.log(error);

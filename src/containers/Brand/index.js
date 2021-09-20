@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import Layout from '../../components/Layout'
 import CheckboxTree from 'react-checkbox-tree';
-import { addBrand, deleteBrands } from '../../actions';
+import { addBrand, deleteBrands, updateBrands } from '../../actions';
 import AddBrandModal from './components/AddBrandModal';
 import {
     IoIosCheckboxOutline,
@@ -47,10 +47,13 @@ export default function Brand() {
         }
     }
     const handleShow = () => {
-        setShow(true);
+        setShow(true)
     }
     const handleShowUpdate = () => {
-        setShowUpdate(true);
+        if (arrChecked.length > 0)
+            setShowUpdate(true)
+        else
+            alert('Please select brand to edit')
     }
 
     const handleClose = () => {
@@ -63,8 +66,8 @@ export default function Brand() {
         setBrandName("");
         setShow(false);
     }
-const handleCloseUpdate = () => {
-
+    const handleCloseUpdate = () => {
+        dispatch(updateBrands(arrChecked));
     }
     const onCheck = (arr) => {
         setChecked(arr);
@@ -78,9 +81,9 @@ const handleCloseUpdate = () => {
 
 
 
-    
+
     const handleInputUpdate = (id, value) => {
-        const arr = arrChecked.map(br => br._id == id ? { _id: br._id, name: value} : br);
+        const arr = arrChecked.map(br => br._id == id ? { ...br, name: value } : br);
         setArrChecked(arr);
     }
 

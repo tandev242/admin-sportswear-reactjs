@@ -27,7 +27,7 @@ export default function User() {
     const [sort, setSort] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [infoEdit, setInfoEdit] = useState(null);
+    const [infoEdit, setInfoEdit] = useState("");
 
     const filterUsers = (text, type) => {
         const arrUsers = getUsersByType(type);
@@ -60,7 +60,6 @@ export default function User() {
         setShowEdit(true);
         setInfoEdit(user);
     }
-
 
     const renderTableUsers = (users) => {
         return (

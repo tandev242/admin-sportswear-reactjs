@@ -74,20 +74,25 @@ const Category = (props) => {
     }
 
     const deleteCategory = () => {
-        updateCheckedAndExpandedCategories();
-        setDeleteCategoryModal(true);
+        if (checked.length == 0 && expanded.length == 0) {
+            alert('Please select category to delete')
+        } else {
+            updateCheckedAndExpandedCategories();
+            setDeleteCategoryModal(true);
+        }
+
     }
 
-    const updateCheckedAndExpandedCategories = () =>{
+    const updateCheckedAndExpandedCategories = () => {
         const categories = createCategoryList(category.categories);
         const checkedArr = [];
         const expandedArr = [];
-        checked.length > 0 && checked.forEach((categoryId , index) => {
-            const cat = categories.find((category , _index) => categoryId == category.value);
+        checked.length > 0 && checked.forEach((categoryId, index) => {
+            const cat = categories.find((category, _index) => categoryId == category.value);
             cat && checkedArr.push(cat);
         })
-        expanded.length > 0 && expanded.forEach((categoryId , index) => {
-            const cat = categories.find((category , _index) => categoryId == category.value);
+        expanded.length > 0 && expanded.forEach((categoryId, index) => {
+            const cat = categories.find((category, _index) => categoryId == category.value);
             cat && expandedArr.push(cat);
         })
         setCheckedArray(checkedArr);
@@ -96,8 +101,12 @@ const Category = (props) => {
 
 
     const updateCategory = () => {
-        updateCheckedAndExpandedCategories();
-        setUpdateCategoryModal(true);
+        if (checked.length == 0 && expanded.length == 0) {
+            alert('Please select category to edit')
+        } else {
+            updateCheckedAndExpandedCategories();
+            setUpdateCategoryModal(true);
+        }
     }
 
     const renderCategories = (categories) => {
@@ -146,9 +155,9 @@ const Category = (props) => {
         setDeleteCategoryModal(false);
     }
 
-    const updateCategoriesForm = () =>{
+    const updateCategoriesForm = () => {
         const form = new FormData();
-        expandedArray.forEach((item , index) =>{
+        expandedArray.forEach((item, index) => {
             form.append('_id', item.value);
             form.append('name', item.name);
             form.append('parentId', item.parentId ? item.parentId : "");
@@ -159,18 +168,18 @@ const Category = (props) => {
             form.append('parentId', item.parentId ? item.parentId : "");
         });
         dispatch(updateCategories(form));
-        alert("Updated successful !");
         setUpdateCategoryModal(false);
+        alert("Updated successful !");
     }
 
-    const handleCategoryInput = (key , value , index , type) => {
-        if(type === "checked"){
-            const updatedCheckedArr = checkedArray.map((item , _index) =>
+    const handleCategoryInput = (key, value, index, type) => {
+        if (type === "checked") {
+            const updatedCheckedArr = checkedArray.map((item, _index) =>
                 index === _index ? { ...item, [key]: value } : item);
             setCheckedArray(updatedCheckedArr);
-        }else if(type === "expanded"){
-            const updatedExpandedArr = expandedArray.map((item , _index) =>
-                index === _index ? {...item , [key]: value} : item);
+        } else if (type === "expanded") {
+            const updatedExpandedArr = expandedArray.map((item, _index) =>
+                index === _index ? { ...item, [key]: value } : item);
             setExpandedArray(updatedExpandedArr);
         }
     }
@@ -182,16 +191,16 @@ const Category = (props) => {
             handleClose={() => setDeleteCategoryModal(false)}
             buttons={[
                 {
-                    label: 'No',
+                    label: 'Yes',
                     color: 'primary',
-                    onClick: () => {
-                        alert('no');
-                    },
+                    onClick: deleteCategories
                 },
                 {
-                    label: 'Yes',
+                    label: 'No',
                     color: 'danger',
-                    onClick: deleteCategories
+                    onClick: () => {
+                        setDeleteCategoryModal(false);
+                    },
                 }
             ]}
         >

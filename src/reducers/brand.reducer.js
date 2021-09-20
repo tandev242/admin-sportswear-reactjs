@@ -63,6 +63,33 @@ export default (state = initState, action) => {
                 loading: false,
                 error: action.payload.error
             }
+            break;
+        case brandConstants.ADD_NEW_BRAND_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+        case brandConstants.UPDATE_BRANDS_REQUEST:
+            state = {
+                ...state,
+                loading: true,
+            }
+            break;
+        case brandConstants.UPDATE_BRANDS_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+            }
+            break;
+        case brandConstants.UPDATE_BRANDS_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+            break;
+
     }
     return state;
 }

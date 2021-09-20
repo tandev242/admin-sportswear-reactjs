@@ -7,12 +7,12 @@ const api = API_URL + '/api';
 
 const token = window.localStorage.getItem('token');
 
-const axiosIntance = axios.create({
+const axiosInstance = axios.create({
     baseURL: api,
     headers: { 'Authorization': token ? `Bearer ${token}` : "" }
 })
 
-axiosIntance.interceptors.request.use((req) => {
+axiosInstance.interceptors.request.use((req) => {
     const { auth } = store.getState();
     if (auth.token) {
         req.headers.Authorization = `Bearer ${auth.token}`;
@@ -20,7 +20,7 @@ axiosIntance.interceptors.request.use((req) => {
     return req;
 })
 
-axiosIntance.interceptors.response.use((res) => {
+axiosInstance.interceptors.response.use((res) => {
     return res;
 }, (error) => {
     console.log(error.response);
@@ -32,4 +32,4 @@ axiosIntance.interceptors.response.use((res) => {
     return Promise.reject(error);
 })
 
-export default axiosIntance;
+export default axiosInstance;

@@ -1,0 +1,24 @@
+.table-order {
+    .title {
+        display: flex;
+        justify-content: space-between;
+    }
+    .btn-group-payment-status{
+        margin-right: 10px;
+    }
+    .btn-group-order-status{
+        .btn{
+            
+            background-color: green;
+        }
+    }
+    .img-profile{
+        height: 40px;
+        width: 40px;
+        object-fit: cover;
+        margin: -15px 5px;
+    }
+    .col-name-sort{
+       cursor: pointer;
+    }
+}
