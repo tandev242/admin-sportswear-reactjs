@@ -91,4 +91,4 @@ export const sizeConstants = {
     UPDATE_SIZE_SUCCESS: "UPDATE_SIZE_SUCCESS",
     UPDATE_SIZE_FAILURE: "UPDATE_SIZE_FAILURE"
 }
-export const API_URL = process.env.API_URL;
+export const API_URL = "https://api-sportswear.herokuapp.com";
