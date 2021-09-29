@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { addProduct, deleteProductById } from "../../actions";
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import "./style.scss";
-import { API_URL } from "../../actions/constants";
 
 
 const Product = (props) => {
@@ -246,6 +245,7 @@ const Product = (props) => {
     if (!productDetails) {
       return null;
     }
+    console.log(productDetails.productPictures)
     return (
       <Modal
         show={productDetailModal}
@@ -297,7 +297,7 @@ const Product = (props) => {
             <div style={{ display: "flex" }}>
               {productDetails.productPictures.map((picture) => (
                 <div className="productImgContainer">
-                  <img src={`${API_URL}/images/${picture.img}`} alt="image not found" />
+                  <img src={picture.img} alt="image not found" />
                 </div>
               ))}
             </div>

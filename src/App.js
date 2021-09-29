@@ -37,6 +37,7 @@ function App() {
           <PrivateRoute path="/brand" component={Brand} />
           <PrivateRoute path="/user" component={User} />
           <PrivateRoute path="/order" component={Order} />
+          <PrivateRoute path="/statistic" component={Order} />
 
 
           <Route path="/signin" component={Signin} />

@@ -13,10 +13,9 @@ import {
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import Input from '../../components/UI/Input';
 import EditUserModal from './components/EditUserModal';
-import AddUserModal from './components/AddUserModal';
 import { useDispatch, useSelector } from 'react-redux';
 import "./style.scss";
-import { API_URL } from "../../actions/constants";
+import { updateUser, deleteUserById } from "../../actions";
 
 
 export default function User() {
@@ -25,14 +24,13 @@ export default function User() {
     const [type, setType] = useState("all");
     const [searchText, setSearchText] = useState("");
     const [sort, setSort] = useState(false);
-    const [showAdd, setShowAdd] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [infoEdit, setInfoEdit] = useState("");
 
-    const filterUsers = (text, type) => {
-        const arrUsers = getUsersByType(type);
-        arrUsers.filter(user => isMatch(user, text));
+    const dispatch = useDispatch();
 
+    const filterUsers = (text, type) => {
+        const arrUsers = getUsersByType(type).filter(user => isMatch(user, text));
         //Sort by descending 
         arrUsers.sort((a, b) => {
             if (a.name < b.name) return -1;
@@ -56,9 +54,22 @@ export default function User() {
             user.email.toLowerCase().indexOf(text.toLowerCase()) !== -1;
     }
 
-    const showEditProfile = (user) =>{
+    const showEditProfile = (user) => {
         setShowEdit(true);
         setInfoEdit(user);
+    }
+
+    const handleSubmitEditUser = () => {
+        dispatch(updateUser(infoEdit));
+        setShowEdit(false);
+        setInfoEdit("");
+    }
+
+    const onDeleteUserById = (userId) => {
+        if (window.confirm('Are you sure you want to delete this user') == true) {
+            const payload = { _id: userId }
+            dispatch(deleteUserById(payload));
+        }
     }
 
     const renderTableUsers = (users) => {
@@ -82,7 +93,7 @@ export default function User() {
                             <td>{user.email}</td>
                             <td>
                                 <img className="img-profile"
-                                    src={user.profilePicture ? `${API_URL}/images/${user.profilePicture}` : `${API_URL}/images/non-avatar.png`}
+                                    src={user.profilePicture ? user.profilePicture : `https://res.cloudinary.com/dmtopd6ps/image/upload/v1632883166/non-avatar_yg1nky.png`}
                                     alt="no profile picture" />
                             </td>
                             <td>{user.role}</td>
@@ -90,7 +101,7 @@ export default function User() {
                                 <button onClick={() => showEditProfile(user)}>
                                     Edit
                                 </button>
-                                <button
+                                <button onClick={() => onDeleteUserById(user._id)}
                                 >
                                     Del
                                 </button>
@@ -128,7 +139,6 @@ export default function User() {
                                         <Dropdown.Item eventKey="admin">Admin</Dropdown.Item>
                                     </DropdownButton>
                                 </ButtonGroup>
-                                <Button style={{ backgroundColor: "green" }} onClick={() => setShowAdd(true)}>Add</Button>
                             </div>
                         </div>
                     </Col>
@@ -144,12 +154,7 @@ export default function User() {
                     handleClose={() => setShowEdit(false)}
                     user={infoEdit}
                     setUser={setInfoEdit}
-                    onSubmit
-                />
-                <AddUserModal
-                    show={showAdd}
-                    modalTitle={"Add New User"}
-                    handleClose={() => setShowAdd(false)}
+                    onSubmit={handleSubmitEditUser}
                 />
             </Container>
         </Layout>

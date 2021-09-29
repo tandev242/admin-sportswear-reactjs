@@ -17,7 +17,7 @@ import "./style.scss";
 
 export default function Order() {
     const order = useSelector(state => state.order);
-    const [typeSort, setTypeSort] = useState("packed");
+    const [typeSort, setTypeSort] = useState("all");
 
 
     const listOrderByType = (type) => {
