@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 loading: false,
-                error: action.payload.orders,
+                error: action.payload.error,
             }
             break;
     }

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Input from '../../../components/UI/Input';
 import Modal from '../../../components/UI/Modal';
 import { Row, Col } from 'react-bootstrap';
-import { API_URL } from "../../../actions/constants";
 
 export default function EditUserModal(props) {
     const {
@@ -14,8 +13,6 @@ export default function EditUserModal(props) {
         onSubmit
     } = props;
 
-    const [role, setRole] = useState("");
-
     const initOptions = () => {
         if (user.role === 'admin') {
             return [{ name: "user", value: "user" }]
@@ -23,11 +20,6 @@ export default function EditUserModal(props) {
         return [{ name: "admin", value: "admin" }]
     }
 
-    const handleRole = (e) => {
-        user.role = e;
-        setUser(user);
-        setRole(e);
-    }
 
     return (<Modal
         show={show}
@@ -40,7 +32,7 @@ export default function EditUserModal(props) {
                 <h6>Name</h6>
             </Col>
             <Col>
-                <Input placeholder="enter the name" value={user.name} />
+                <Input placeholder="enter the name" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} />
             </Col>
         </Row>
         <Row>
@@ -48,7 +40,7 @@ export default function EditUserModal(props) {
                 <h6>Email</h6>
             </Col>
             <Col>
-                <Input value={user.email} />
+                <Input value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} />
             </Col>
         </Row>
         <Row>
@@ -58,7 +50,7 @@ export default function EditUserModal(props) {
             <Col>
                 <img className="container-profile-picture"
                     style={{ height: "150px", width: "150px", margin: "10px", objectFit: "cover" }}
-                    src={user.profilePicture ? `${API_URL}/images/${user.profilePicture}` : `${API_URL}/images/non-avatar.png`}
+                    src={user.profilePicture ? user.profilePicture : `https://res.cloudinary.com/dmtopd6ps/image/upload/v1632883166/non-avatar_yg1nky.png`}
                     alt="no profile picture" />
             </Col>
         </Row>
@@ -71,7 +63,7 @@ export default function EditUserModal(props) {
                     value={user.role}
                     placeholder={user.role}
                     options={initOptions()}
-                    onChange={(e) => handleRole(e.target.value)}
+                    onChange={(e) => setUser({ ...user, role: e.target.value })}
                 />
             </Col>
         </Row>
