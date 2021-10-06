@@ -23,21 +23,21 @@ export const getProducts = () => {
 };
 
 
-export const getProductById = (productId) => {
+export const getProductById = (_id) => {
   return async (dispatch) => {
     try {
       dispatch({ type: productConstants.GET_PRODUCT_BY_ID_REQUEST });
 
-      const res = await axios.get(`/product/${productId}`);
+      const res = await axios.get(`/product/getById`, { _id });
       if (res.status === 200) {
-        const { product, sizes,  } = res.data;
+        const { product, sizes, } = res.data;
         //   console.log(products);
         dispatch({
           type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
           payload: { product, sizes },
         });
       } else {
-        const {error} = res.data;
+        const { error } = res.data;
         dispatch({
           type: productConstants.GET_ALL_PRODUCTS_FAILURE, payload: { error }
         });

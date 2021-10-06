@@ -49,7 +49,7 @@ const AddCategoryModal = (props) => {
             </Row>
             <Row>
                 <Col>
-                    <input type="file" name="categoryImage" onChange={handleCategoryImage} />
+                    <input type="file" name="categoryImage" accept="image/x-png,image/gif,image/jpeg" onChange={handleCategoryImage} />
                 </Col>
             </Row>
         </Modal>

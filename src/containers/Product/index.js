@@ -221,6 +221,7 @@ const Product = (props) => {
         <Input
           type="file"
           name="productPicture"
+          accept="image/x-png,image/gif,image/jpeg"
           onChange={handleProductPictures}
         />
         {productPictures.length > 0

@@ -11,6 +11,7 @@ const AddBrandModal = (props) => {
         modalTitle,
         brandName,
         setBrandName,
+        handleBrandImage,
         onSubmit
     } = props;
 
@@ -29,6 +30,11 @@ const AddBrandModal = (props) => {
                         onChange={(e) => setBrandName(e.target.value)}
                         className="form-control-sm"
                     />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <input type="file" name="brandImage" accept="image/x-png,image/gif,image/jpeg" onChange={handleBrandImage} />
                 </Col>
             </Row>
         </Modal>

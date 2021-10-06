@@ -4,8 +4,7 @@ import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import Input from '../../components/UI/Input';
 import { login } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect  } from 'react-router-dom';
-
+import { Redirect } from 'react-router-dom';
 
 export default function Signin(props) {
     const [email, setEmail] = useState('');
@@ -56,12 +55,6 @@ export default function Signin(props) {
                                 Submit
                             </Button>
                         </Form>
-
-{/* 
-                        <Link style={{height: "50px", width: "100px" , margin: "100px"}} to="/auth/google">
-                            <img style={{ height: "40px", width: "40px" }} src={GoogleIcon} alt="GoogleIcon" />
-                            Google
-                        </Link> */}
                     </Col>
                 </Row>
 

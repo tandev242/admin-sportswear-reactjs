@@ -23,6 +23,7 @@ export default function Brand() {
     const [checked, setChecked] = useState([]);
     const [arrChecked, setArrChecked] = useState([]);
     const [brandName, setBrandName] = useState("");
+    const [brandImage, setBrandImage] = useState("");
     const [show, setShow] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
     const dispatch = useDispatch();
@@ -62,8 +63,12 @@ export default function Brand() {
             setShow(false);
             return;
         }
-        dispatch(addBrand({ name: brandName }));
+        const form = new FormData();
+        form.append('name', brandName);
+        form.append('brandImage', brandImage);
+        dispatch(addBrand(form));
         setBrandName("");
+        setBrandImage("");
         setShow(false);
     }
     const handleCloseUpdate = () => {
@@ -80,7 +85,9 @@ export default function Brand() {
     }
 
 
-
+    const handleBrandImage = (e) => {
+        setBrandImage(e.target.files[0]);
+    }
 
     const handleInputUpdate = (id, value) => {
         const arr = arrChecked.map(br => br._id == id ? { ...br, name: value } : br);
@@ -124,6 +131,7 @@ export default function Brand() {
                     onSubmit={handleClose}
                     handleClose={() => setShow(false)}
                     brandName={brandName}
+                    handleBrandImage={handleBrandImage}
                     setBrandName={setBrandName}
                 />
                 <UpdateBrandModal modalTitle={`Edit Brand Name`}
