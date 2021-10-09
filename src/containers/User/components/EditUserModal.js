@@ -40,7 +40,7 @@ export default function EditUserModal(props) {
                 <h6>Email</h6>
             </Col>
             <Col>
-                <Input value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} />
+                <Input value={user.email}/>
             </Col>
         </Row>
         <Row>
