@@ -3,18 +3,22 @@ import Layout from "../../components/Layout";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import { useSelector, useDispatch } from "react-redux";
-import { addProduct, deleteProductById } from "../../actions";
+import { addProduct, deleteProductById, updateDiscount } from "../../actions";
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import "./style.scss";
 import ProductDetailsModal from "./components/ProductDetailsModal";
 import AddProductModal from "./components/AddProductModal";
+import AddDiscountModal from "./components/AddDiscountModal";
+
 
 
 const Product = (props) => {
 
     const [showAddProductModal, setShowAddProductModal] = useState(false);
     const [showProductDetailsModal, setShowProductDetailsModal] = useState(false);
+    const [showAddDiscountModal, setShowAddDiscountModal] = useState(false);
     const [productDetails, setProductDetails] = useState(null);
+    const [discount, setDiscount] = useState({ type: "category", _id: "", discountPercent: 0 })
     const [searchText, setSearchText] = useState("");
     const [sort, setSort] = useState(false);
     const { products } = useSelector((state) => state.product);
@@ -46,7 +50,9 @@ const Product = (props) => {
         }
         dispatch(addProduct(form)).then(() => setShowAddProductModal(false));
     };
-
+    const onSubmitDiscountModal = () => {
+        dispatch(updateDiscount(discount))
+    }
 
     const getTotalQtyByProduct = (product) => {
         let qty = 0;
@@ -79,6 +85,7 @@ const Product = (props) => {
                         <th className="col-name-sort" onClick={() => setSort(!sort)}>Name<UnfoldMoreIcon color="secondary" /></th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Discount</th>
                         <th>Category</th>
                         <th>Brand</th>
                         <th>Actions</th>
@@ -92,6 +99,7 @@ const Product = (props) => {
                                 <td>{product.name}</td>
                                 <td>{product.price}</td>
                                 <td>{getTotalQtyByProduct(product)}</td>
+                                <td>{product.discountPercent}%</td>
                                 <td>{product.category.name}</td>
                                 <td>{product.brand.name}</td>
                                 <td>
@@ -135,7 +143,7 @@ const Product = (props) => {
                                 value={searchText}
                                 onChange={(e) => setSearchText(e.target.value)} />
                             <div className="wrapper-btn">
-                                <Button variant="success" onClick={() => setShowAddProductModal(true)}>Set Discount</Button>
+                                <Button variant="success" onClick={() => setShowAddDiscountModal(true)}>Set Discount</Button>
                                 <Button onClick={() => setShowAddProductModal(true)}>Add</Button>
                             </div>
                         </div>
@@ -159,6 +167,15 @@ const Product = (props) => {
                 handleClose={() => setShowProductDetailsModal(false)}
                 product={productDetails}
                 show={showProductDetailsModal}
+            />
+            <AddDiscountModal
+                show={showAddDiscountModal}
+                onSubmit={onSubmitDiscountModal}
+                handleClose={() => setShowAddDiscountModal(false)}
+                categories={categories}
+                brands={brands}
+                discount={discount}
+                setDiscount={setDiscount}
             />
         </Layout>
     );

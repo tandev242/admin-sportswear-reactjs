@@ -8,7 +8,6 @@ export default function productModal(props) {
         product,
         show,
     } = props;
-    console.log(product);
     
     if (!product) {
         return null;

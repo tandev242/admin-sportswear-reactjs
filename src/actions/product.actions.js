@@ -71,6 +71,29 @@ export const addProduct = (form) => {
   }
 }
 
+export const updateDiscount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: productConstants.UPDATE_DISCOUNT_REQUEST });
+      const res = await axios.post(`/product/updateDiscountPercent`, data);
+      // console.log(res.status);
+      if (res.status === 202) {
+        dispatch({ type: productConstants.UPDATE_DISCOUNT_SUCCESS });
+        dispatch(getProducts());
+      } else {
+        const { error } = res.data;
+        dispatch({
+          type: productConstants.UPDATE_DISCOUNT_FAILURE,
+          payload: { error }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+
 export const deleteProductById = (payload) => {
   return async (dispatch) => {
     try {

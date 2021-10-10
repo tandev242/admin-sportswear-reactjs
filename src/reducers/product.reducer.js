@@ -32,6 +32,28 @@ export default (state = initialState, action) => {
                 error: action.payload.error
             }
             break;
+        case productConstants.UPDATE_DISCOUNT_REQUEST:
+            // console.log(action.payload.products);
+            state = {
+                ...state,
+                loading: true,
+            }
+            break;
+        case productConstants.UPDATE_DISCOUNT_SUCCESS:
+            // console.log(action.payload.products);
+            state = {
+                ...state,
+                loading: false
+            }
+            break;
+        case productConstants.UPDATE_DISCOUNT_FAILURE:
+            // console.log(action.payload.products);
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+            break;
     }
     return state;
 }
