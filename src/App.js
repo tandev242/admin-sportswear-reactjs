@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './containers/Home';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +7,10 @@ import Product from './containers/Product';
 import Signin from './containers/Signin';
 import Category from './containers/Category';
 import Order from './containers/Order';
-
 import Brand from './containers/Brand';
 import PrivateRoute from './components/HOC/PrivateRoute';
 import User from './containers/User';
+import Statistic from './containers/Statistic';
 
 
 
@@ -37,7 +36,7 @@ function App() {
           <PrivateRoute path="/brand" component={Brand} />
           <PrivateRoute path="/user" component={User} />
           <PrivateRoute path="/order" component={Order} />
-          <PrivateRoute path="/statistic" component={Order} />
+          <PrivateRoute path="/statistic" component={Statistic} />
 
 
           <Route path="/signin" component={Signin} />

@@ -1,35 +1,37 @@
-import axios from 'axios';
-import store from '../store';
-import { authConstants } from '../actions/constants';
-import { API_URL } from '../actions/constants';
+import axios from "axios";
+import store from "../store";
+import { authConstants } from "../actions/constants";
+import { API_URL } from "../actions/constants";
 
-const api = API_URL + '/api';
+const api = API_URL + "/api";
 
-const token = window.localStorage.getItem('token');
+var token = window.localStorage.getItem("token");
 
 const axiosInstance = axios.create({
-    baseURL: api,
-    headers: { 'Authorization': token ? `Bearer ${token}` : "" }
-})
+  baseURL: api,
+  headers: { Authorization: token ? `Bearer ${token}` : "" },
+});
 
 axiosInstance.interceptors.request.use((req) => {
-    const { auth } = store.getState();
-    if (auth.token) {
-        req.headers.Authorization = `Bearer ${auth.token}`;
-    }
-    return req;
-})
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
+});
 
-axiosInstance.interceptors.response.use((res) => {
+axiosInstance.interceptors.response.use(
+  (res) => {
     return res;
-}, (error) => {
+  },
+  (error) => {
     console.log(error.response);
     const status = error.response ? error.response.status : 500;
     if (status && status === 500) {
-        localStorage.clear();
-        store.dispatch({ type: authConstants.LOGOUT_SUCCESS });
+      localStorage.clear();
+      store.dispatch({ type: authConstants.LOGOUT_SUCCESS });
     }
     return Promise.reject(error);
-})
+  }
+);
 
 export default axiosInstance;

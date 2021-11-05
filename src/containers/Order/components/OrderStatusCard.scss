@@ -58,7 +58,7 @@
             }
             .order-info {
                 height: 60px;
-                width: 60px;
+                width: 80px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -66,6 +66,10 @@
                 position: absolute;
                 top: -26px;
                 transform: translateX(-50%);
+
+                .date{
+                    margin-top: 10px;
+                }
             }
         }
     }

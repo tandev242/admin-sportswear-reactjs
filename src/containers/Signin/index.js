@@ -13,9 +13,6 @@ export default function Signin(props) {
 
     const dispatch = useDispatch();
 
-
-
-
     const userLogin = (e) => {
 
         e.preventDefault();
@@ -23,12 +20,13 @@ export default function Signin(props) {
         const user = {
             email, password
         }
-        dispatch(login(user));
+        dispatch(login(user)).catch(err => alert("Username or password is incorrect"))
     }
 
     if (auth.authenticate) {
         return <Redirect to={`/`} />
     }
+
 
     return (
         <Layout>
