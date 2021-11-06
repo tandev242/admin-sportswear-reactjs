@@ -10,7 +10,6 @@ const initState = {
     message: ''
 };
 export default (state = initState, action) => {
-
     switch (action.type) {
         case authConstants.LOGIN_REQUEST:
             state = {
@@ -57,7 +56,5 @@ export default (state = initState, action) => {
                 ...state
             }
     }
-
-
     return state;
 }

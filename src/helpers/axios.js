@@ -5,7 +5,7 @@ import { API_URL } from "../actions/constants";
 
 const api = API_URL + "/api";
 
-var token = window.localStorage.getItem("token");
+const token = window.localStorage.getItem("token");
 
 const axiosInstance = axios.create({
   baseURL: api,
@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((req) => {
+  const token = window.localStorage.getItem("token");
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
   }
