@@ -14,27 +14,27 @@ export const getInitData = () =>{
         const res = await axios.post(`/initData`);
         if( res.status === 200){
             const { categories , products , brands, orders, sizes , users } = res.data;
-            dispatch({
+            await dispatch({
                 type: categoryConstants.GET_ALL_CATEGORIES_SUCCESS,
                 payload: { categories },
             });
-            dispatch({
+            await dispatch({
                 type: brandConstants.GET_ALL_BRANDS_SUCCESS,
                 payload: { brands }
             });
-            dispatch({
+            await dispatch({
                 type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
                 payload: { products }
             });
-            dispatch({
+            await dispatch({
                 type: orderConstants.GET_ALL_ORDERS_SUCCESS,
                 payload: { orders }
             });
-            dispatch({
+            await dispatch({
                 type: sizeConstants.GET_ALL_SIZE_SUCCESS,
                 payload: { sizes }
             })
-            dispatch({
+            await dispatch({
                 type: userConstants.GET_ALL_USER_SUCCESS,
                 payload: { users }
             })

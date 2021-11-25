@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Layout from "../../components/Layout";
 import {
     Container,
@@ -8,19 +8,70 @@ import {
     DropdownButton,
     Dropdown
 } from 'react-bootstrap';
-import { Bar, Line, Radar, Doughnut } from "react-chartjs-2";
+import { getRevenue } from '../../actions';
+import { Bar, Line, Radar } from "react-chartjs-2";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './style.scss'
+import { useDispatch } from 'react-redux';
 
 export default function Statistic() {
+    const [chartType, setChartType] = useState("Bar");
+    const [statisticType, setStatisticType] = useState("day")
 
-    const [typeChart, setTypeChart] = useState("Bar");
+    // Set init date from 7 day before til now.
+    const dateNow = new Date();
+    const [dateTo, setDateTo] = useState(dateNow.toISOString());
+    const dateBeforeAWeek = new Date(dateNow);
+    dateBeforeAWeek.setDate(dateBeforeAWeek.getDate() - 7)
+    const [dateFrom, setDateFrom] = useState(dateBeforeAWeek.toISOString());
 
+    const [revenue, setRevenue] = useState(null);
+    const dispatch = useDispatch();
+
+    // Fetching API when type or date changed
+    useEffect(() => {
+        const fetchAPI = async () => {
+            const payload = {
+                type: statisticType,
+                dateFrom,
+                dateTo,
+            }
+            const res = await dispatch(getRevenue(payload));
+            const rvn = res.data.revenue;
+            setRevenue(rvn)
+        }
+        fetchAPI()
+    }, [statisticType, dateFrom, dateTo]);
+
+    // Fill Revenue Arr into Data field of ChartJS
+    const myData = (dataArr) => {
+        const labels = [];
+        const data = [];
+        dataArr.forEach((element) => {
+            labels.push(element.date)
+            data.push(element.totalAmount)
+        })
+        const chartData = {
+            labels,
+            datasets: [
+                {
+                    label: "Total amount",
+                    backgroundColor: [
+                        "#3e95cd"
+                    ],
+                    data
+                }
+            ]
+        }
+        return chartData
+    }
+
+    // Customize the chart 
     const Chart = ({ data, options }) => {
-        if (typeChart === "Doughnut") {
-            return <Doughnut data={data} options={{ ...options, maintainAspectRatio: false }} height={600} />;
-        } else if (typeChart === "Line") {
+        if (chartType === "Line") {
             return <Line data={data} options={options} />;
-        } else if (typeChart === "Radar ") {
+        } else if (chartType === "Radar ") {
             return <Radar data={data} options={{ ...options, maintainAspectRatio: false }} height={650} />;
         }
         return <Bar data={data} options={options} />;
@@ -33,54 +84,52 @@ export default function Statistic() {
                     <Col md={12}>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <h3>Statistic</h3>
-                            <ButtonGroup size="sm" className="btn-group-order-status">
-                                <DropdownButton
-                                    className="dropdown-role" as={ButtonGroup}
-                                    title={typeChart}
-                                    onSelect={(e) => setTypeChart(e)}
-                                >
-                                    <Dropdown.Item eventKey="Bar">Bar</Dropdown.Item>
-                                    <Dropdown.Item eventKey="Line">Line</Dropdown.Item>
-                                    <Dropdown.Item eventKey="Radar ">Radar </Dropdown.Item>
-                                    <Dropdown.Item eventKey="Doughnut">Doughnut</Dropdown.Item>
-                                </DropdownButton>
-                            </ButtonGroup>
+                            <div className="task-bar_date">
+                                <h5> Period:  </h5>
+                                <DatePicker selected={new Date(dateFrom)} onChange={(date) => setDateFrom(date.toString())} />
+                                <DatePicker selected={new Date(dateTo)} onChange={(date) => setDateTo(date.toString())} />
+                            </div>
+                            <div className="task-bar">
+                                <ButtonGroup size="sm" className="btn-group-order-status">
+                                    <DropdownButton
+                                        className="dropdown-role" as={ButtonGroup}
+                                        title={`By ${statisticType}`}
+                                        onSelect={(e) => setStatisticType(e)}
+                                    >
+                                        <Dropdown.Item eventKey="day">By day</Dropdown.Item>
+                                        <Dropdown.Item eventKey="month">By month</Dropdown.Item>
+                                        <Dropdown.Item eventKey="year">By year</Dropdown.Item>
+                                    </DropdownButton>
+                                </ButtonGroup>
+                                <ButtonGroup size="sm" className="btn-group-order-status">
+                                    <DropdownButton
+                                        className="dropdown-role" as={ButtonGroup}
+                                        title={chartType}
+                                        onSelect={(e) => setChartType(e)}
+                                    >
+                                        <Dropdown.Item eventKey="Bar">Bar</Dropdown.Item>
+                                        <Dropdown.Item eventKey="Line">Line</Dropdown.Item>
+                                        <Dropdown.Item eventKey="Radar ">Radar </Dropdown.Item>
+                                    </DropdownButton>
+                                </ButtonGroup>
+                            </div>
                         </div>
                     </Col>
                 </Row>
                 <hr />
                 <Row >
-                    <Chart
-                        data={{
-                            labels: [
-                                "Africa",
-                                "Asia",
-                                "Europe",
-                                "Latin America",
-                                "North America"
-                            ],
-                            datasets: [
-                                {
-                                    label: "Population (millions)",
-                                    backgroundColor: [
-                                        "#3e95cd",
-                                        "#8e5ea2",
-                                        "#3cba9f",
-                                        "#e8c3b9",
-                                        "#c45850"
-                                    ],
-                                    data: [2478, 5267, 734, 784, 433]
+                    {revenue &&
+                        <Chart
+                            data={myData(revenue)}
+                            options={{
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: "Predicted world population (millions) in 2050"
                                 }
-                            ]
-                        }}
-                        options={{
-                            legend: { display: false },
-                            title: {
-                                display: true,
-                                text: "Predicted world population (millions) in 2050"
-                            }
-                        }}
-                    />
+                            }}
+                        />
+                    }
                 </Row>
             </Container>
         </Layout>

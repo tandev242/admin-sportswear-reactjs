@@ -5,3 +5,5 @@ export * from "./product.actions";
 export * from "./brand.actions";
 export * from "./order.actions";
 export * from "./user.actions";
+export * from "./statistic.actions";
+

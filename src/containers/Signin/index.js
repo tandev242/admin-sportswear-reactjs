@@ -6,7 +6,7 @@ import { login } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-export default function Signin(props) {
+export default function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const auth = useSelector(state => state.auth);

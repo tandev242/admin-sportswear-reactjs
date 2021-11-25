@@ -37,8 +37,6 @@ function App() {
           <PrivateRoute path="/user" component={User} />
           <PrivateRoute path="/order" component={Order} />
           <PrivateRoute path="/statistic" component={Statistic} />
-
-
           <Route path="/signin" component={Signin} />
         </Switch>
       </Router>

@@ -10,7 +10,7 @@ import ProductDetailsModal from "./components/ProductDetailsModal";
 import AddProductModal from "./components/AddProductModal";
 import AddDiscountModal from "./components/AddDiscountModal";
 
-const Product = (props) => {
+const Product = () => {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showProductDetailsModal, setShowProductDetailsModal] = useState(false);
   const [showAddDiscountModal, setShowAddDiscountModal] = useState(false);
@@ -37,7 +37,7 @@ const Product = (props) => {
     discountPercent: 0,
   });
   const dispatch = useDispatch();
-
+  console.log("hagag")
   const submitProductForm = () => {
     const form = new FormData();
     form.append("name", product.name);

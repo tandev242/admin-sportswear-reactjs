@@ -40,7 +40,6 @@ export const isUserLoggedIn = () => {
     const token = localStorage.getItem("token");
     const res = await axios.post(`/isUserLoggedIn`);
     if (res.status === 200) {
-      console.log(res.status)
       const user = JSON.parse(localStorage.getItem("user"));
       dispatch({
         type: authConstants.LOGIN_SUCCESS,
