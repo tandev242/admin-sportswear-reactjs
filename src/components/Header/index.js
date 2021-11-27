@@ -1,17 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signout } from "../../actions";
-
+import EditUserModal from "../UserModal/EditUserModal"
+import { updateUser } from "../../actions";
+import './style.scss'
 function Header(props) {
 
     const auth = useSelector((state) => state.auth);
+    const [showEdit, setShowEdit] = useState(false);
+    const [infoEdit, setInfoEdit] = useState("");
+
     const dispatch = useDispatch();
 
     const logout = () => {
         dispatch(signout());
     };
+
+    const handleShowEditUser = () => {
+        setShowEdit(true);
+        setInfoEdit(auth.user);
+    }
+
+    const handleSubmitEditUser = () => {
+        dispatch(updateUser(infoEdit));
+        setShowEdit(false);
+        setInfoEdit("");
+    }
+
+
     const renderNonLoggedInLinks = () => {
         return <Nav>
             <li className="nav-item">
@@ -24,18 +42,28 @@ function Header(props) {
 
     const renderLoggedInLinks = () => {
         return (
-            <Nav>
-                <li className="nav-item">
-                    <span className="nav-link" >
-                        {`${auth.user.name}`}
-                    </span>
-                </li>
-                <li className="nav-item">
-                    <span className="nav-link" onClick={logout}>
-                        Signout
-                    </span>
-                </li>
-            </Nav>
+            <>
+                <Nav>
+                    <li className="nav-item">
+                        <span className="nav-link" onClick={handleShowEditUser}>
+                            {auth.user.name}
+                        </span>
+                    </li>
+                    <li className="nav-item">
+                        <span className="nav-link" onClick={logout}>
+                            Signout
+                        </span>
+                    </li>
+                </Nav>
+                <EditUserModal
+                    show={showEdit}
+                    modalTitle={"Edit Info"}
+                    handleClose={() => setShowEdit(false)}
+                    user={infoEdit}
+                    setUser={setInfoEdit}
+                    onSubmit={handleSubmitEditUser}
+                />
+            </>
         );
     }
     return (

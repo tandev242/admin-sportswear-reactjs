@@ -1,25 +1,16 @@
 import React, { useState } from 'react';
-import Input from '../../../components/UI/Input';
-import Modal from '../../../components/UI/Modal';
+import Input from '../UI/Input';
+import Modal from '../UI/Modal';
 import { Row, Col } from 'react-bootstrap';
 
-export default function EditUserModal(props) {
+export default function UserInfoModal(props) {
     const {
         show,
         handleClose,
         modalTitle,
         user,
-        setUser,
         onSubmit
     } = props;
-
-    const initOptions = () => {
-        if (user.role === 'admin') {
-            return [{ name: "user", value: "user" }]
-        }
-        return [{ name: "admin", value: "admin" }]
-    }
-
 
     return (<Modal
         show={show}
@@ -32,7 +23,7 @@ export default function EditUserModal(props) {
                 <h6>Name</h6>
             </Col>
             <Col>
-                <Input placeholder="enter the name" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} />
+                {user.name}
             </Col>
         </Row>
         <Row>
@@ -40,7 +31,7 @@ export default function EditUserModal(props) {
                 <h6>Email</h6>
             </Col>
             <Col>
-                <Input value={user.email}/>
+                {user.email}
             </Col>
         </Row>
         <Row>
@@ -59,12 +50,7 @@ export default function EditUserModal(props) {
                 <h6>Role</h6>
             </Col>
             <Col>
-                <Input type={"select"}
-                    value={user.role}
-                    placeholder={user.role}
-                    options={initOptions()}
-                    onChange={(e) => setUser({ ...user, role: e.target.value })}
-                />
+                {user.role}
             </Col>
         </Row>
     </Modal>
