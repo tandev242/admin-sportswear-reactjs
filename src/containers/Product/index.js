@@ -103,7 +103,7 @@ const Product = () => {
             ? products.map((product, index) => (
                 <tr key={product._id}>
                   <td>{index + 1}</td>
-                  <td>{product.name}</td>
+                  <td className="product-name">{product.name}</td>
                   <td>{product.price}</td>
                   <td>{getTotalQtyByProduct(product)}</td>
                   <td>{product.discountPercent}%</td>
