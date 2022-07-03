@@ -12,10 +12,11 @@ import {
 } from 'react-bootstrap';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import Input from '../../components/UI/Input';
-import UserInfoModal from '../../components/UserModal/UserInfoModal';
+import EditUserModal from '../../components/UserModal/EditUserModal';
 import { useDispatch, useSelector } from 'react-redux';
 import "./style.scss";
-import { deleteUserById } from "../../actions";
+import { updateUser, deleteUserById } from "../../actions";
+
 
 export default function User() {
 
@@ -23,7 +24,7 @@ export default function User() {
     const [type, setType] = useState("all");
     const [searchText, setSearchText] = useState("");
     const [sort, setSort] = useState(false);
-    const [showInfo, setShowInfo] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
     const [userInfo, setUserInfo] = useState("");
 
     const dispatch = useDispatch();
@@ -53,13 +54,14 @@ export default function User() {
             user.email.toLowerCase().indexOf(text.toLowerCase()) !== -1;
     }
 
-    const showInfoProfile = (user) => {
-        setShowInfo(true);
+    const showEditProfile = (user) => {
+        setShowEdit(true);
         setUserInfo(user);
     }
 
-    const handleSubmit = () => {
-        setShowInfo(false);
+    const handleSubmitEditUser = () => {
+        dispatch(updateUser(userInfo));
+        setShowEdit(false);
         setUserInfo("");
     }
 
@@ -96,8 +98,8 @@ export default function User() {
                             </td>
                             <td>{user.role}</td>
                             <td>
-                                <button onClick={() => showInfoProfile(user)}>
-                                    Details
+                                <button onClick={() => showEditProfile(user)}>
+                                    Edit
                                 </button>
                                 <button onClick={() => onDeleteUserById(user._id)}
                                 >
@@ -146,12 +148,13 @@ export default function User() {
                         {renderTableUsers(filterUsers(searchText, type))}
                     </Col>
                 </Row>
-                <UserInfoModal
-                    show={showInfo}
-                    modalTitle={"User Info"}
-                    handleClose={() => setShowInfo(false)}
+                <EditUserModal
+                    show={showEdit}
+                    modalTitle={"Edit User"}
+                    handleClose={() => setShowEdit(false)}
                     user={userInfo}
-                    onSubmit={handleSubmit}
+                    setUser={setUserInfo}
+                    onSubmit={handleSubmitEditUser}
                 />
             </Container>
         </Layout>

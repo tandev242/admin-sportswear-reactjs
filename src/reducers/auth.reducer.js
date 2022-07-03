@@ -6,7 +6,8 @@ const initState = {
     authenticating: false,
     loading: false,
     error: null,
-    token: null,
+    accessToken: null,
+    refreshToken: null,
     message: ''
 };
 export default (state = initState, action) => {
@@ -21,7 +22,8 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 user: action.payload.user,
-                token: action.payload.token,
+                accessToken: action.payload.accessToken,
+                refreshToken: action.payload.refreshToken,
                 authenticate: true,
                 authenticating: false
             }

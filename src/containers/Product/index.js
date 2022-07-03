@@ -37,7 +37,7 @@ const Product = () => {
     discountPercent: 0,
   });
   const dispatch = useDispatch();
-  console.log("hagag")
+  
   const submitProductForm = () => {
     const form = new FormData();
     form.append("name", product.name);
@@ -101,41 +101,41 @@ const Product = () => {
         <tbody>
           {products.length > 0
             ? products.map((product, index) => (
-                <tr key={product._id}>
-                  <td>{index + 1}</td>
-                  <td className="product-name">{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>{getTotalQtyByProduct(product)}</td>
-                  <td>{product.discountPercent}%</td>
-                  <td>{product.category.name}</td>
-                  <td>{product.brand.name}</td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        setProductDetails(product);
-                        setShowProductDetailsModal(true);
-                      }}
-                    >
-                      info
-                    </button>
-                    <button
-                      onClick={() => {
-                        const payload = {
-                          productId: product._id,
-                        };
-                        if (
-                          window.confirm("Are you sure you want to delete") ==
-                          true
-                        ) {
-                          dispatch(deleteProductById(payload));
-                        }
-                      }}
-                    >
-                      del
-                    </button>
-                  </td>
-                </tr>
-              ))
+              <tr key={product._id}>
+                <td>{index + 1}</td>
+                <td className="product-name">{product.name}</td>
+                <td>{product.price}</td>
+                <td>{getTotalQtyByProduct(product)}</td>
+                <td>{product.discountPercent}%</td>
+                <td>{product.category.name}</td>
+                <td>{product.brand?.name}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setProductDetails(product);
+                      setShowProductDetailsModal(true);
+                    }}
+                  >
+                    info
+                  </button>
+                  <button
+                    onClick={() => {
+                      const payload = {
+                        productId: product._id,
+                      };
+                      if (
+                        window.confirm("Are you sure you want to delete") ==
+                        true
+                      ) {
+                        dispatch(deleteProductById(payload));
+                      }
+                    }}
+                  >
+                    del
+                  </button>
+                </td>
+              </tr>
+            ))
             : null}
         </tbody>
       </Table>

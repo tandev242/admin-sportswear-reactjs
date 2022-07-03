@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Card from "../../../components/UI/Card";
 import Input from "../../../components/UI/Input";
 import { Button } from 'react-bootstrap';

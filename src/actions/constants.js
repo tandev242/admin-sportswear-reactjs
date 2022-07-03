@@ -104,4 +104,4 @@ export const sizeConstants = {
     UPDATE_SIZE_FAILURE: "UPDATE_SIZE_FAILURE"
 }
 
-export const API_URL = "https://api-sportswear.herokuapp.com";
+export const API_URL = "https://ec2-3-112-35-74.ap-northeast-1.compute.amazonaws.com/api"

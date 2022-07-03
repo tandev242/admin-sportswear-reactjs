@@ -6,10 +6,10 @@ export const getAllCategory = () => {
         dispatch({ type: categoryConstants.GET_ALL_CATEGORIES_REQUEST });
         const res = await axios.get(`/category/getCategories`);
         if (res.status === 200) {
-            const { categoryList } = res.data;
+            const { categories } = res.data;
             dispatch({
                 type: categoryConstants.GET_ALL_CATEGORIES_SUCCESS,
-                payload: { categories: categoryList }
+                payload: { categories }
             });
         } else {
             dispatch({

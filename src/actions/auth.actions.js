@@ -4,17 +4,20 @@ import axios from "../helpers/axios";
 export const login = (user) => {
   return async (dispatch) => {
     dispatch({ type: authConstants.LOGIN_REQUEST });
-    const res = await axios.post(`/signin`, { ...user });
+    const res = await axios.post(`/auth/signin`, { ...user });
 
     if (res.status === 200) {
-      const { token, user } = res.data;
+      const { accessToken, refreshToken, user } = res.data;
       if (user.role === "admin") {
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("token", token);
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        console.log(res.data)
         dispatch({
           type: authConstants.LOGIN_SUCCESS,
           payload: {
-            token,
+            accessToken,
+            refreshToken,
             user,
           },
         });
@@ -37,13 +40,14 @@ export const login = (user) => {
 
 export const isUserLoggedIn = () => {
   return async (dispatch) => {
-    const token = localStorage.getItem("token");
-    const res = await axios.post(`/isUserLoggedIn`);
+    const res = await axios.post(`/auth/isUserLoggedIn`);
     if (res.status === 200) {
+      const accessToken = localStorage.getItem("accessToken");
+      const refreshToken = localStorage.getItem("refreshToken");
       const user = JSON.parse(localStorage.getItem("user"));
       dispatch({
         type: authConstants.LOGIN_SUCCESS,
-        payload: { user, token },
+        payload: { user, accessToken, refreshToken },
       });
     } else {
       dispatch({
@@ -57,7 +61,7 @@ export const isUserLoggedIn = () => {
 export const signout = () => {
   return async (dispatch) => {
     dispatch({ type: authConstants.LOGOUT_REQUEST });
-    const res = await axios.post(`/signout`);
+    const res = await axios.post(`/auth/signout`);
     if (res.status === 200) {
       localStorage.clear();
       dispatch({ type: authConstants.LOGOUT_SUCCESS });
