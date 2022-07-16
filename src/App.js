@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './containers/Home';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInitData, isUserLoggedIn } from './actions';
+import { getInitData, isUserLoggedIn, getCustomerOrders } from './actions';
 import Product from './containers/Product';
 import Signin from './containers/Signin';
 import Category from './containers/Category';
@@ -23,6 +23,7 @@ function App() {
       dispatch(isUserLoggedIn());
     } else {
       dispatch(getInitData());
+      dispatch(getCustomerOrders());
     }
   }, [auth.authenticate]);
 

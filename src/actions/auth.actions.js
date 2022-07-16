@@ -12,7 +12,6 @@ export const login = (user) => {
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        console.log(res.data)
         dispatch({
           type: authConstants.LOGIN_SUCCESS,
           payload: {

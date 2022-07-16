@@ -78,6 +78,10 @@ export const productConstants = {
     UPDATE_DISCOUNT_REQUEST: "UPDATE_DISCOUNT_REQUEST",
     UPDATE_DISCOUNT_SUCCESS: "UPDATE_DISCOUNT_SUCCESS",
     UPDATE_DISCOUNT_FAILURE: "UPDATE_DISCOUNT_FAILURE",
+
+    UPDATE_PRODUCT_REQUEST: "UPDATE_PRODUCT_REQUEST",
+    UPDATE_PRODUCT_SUCCESS: "UPDATE_PRODUCT_SUCCESS",
+    UPDATE_PRODUCT_FAILURE: "UPDATE_PRODUCT_FAILURE",
 }
 
 export const orderConstants = {
@@ -105,3 +109,4 @@ export const sizeConstants = {
 }
 
 export const API_URL = "https://ec2-3-112-35-74.ap-northeast-1.compute.amazonaws.com/api"
+// export const API_URL = "http://localhost:5000/api"

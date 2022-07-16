@@ -116,7 +116,7 @@ const Product = () => {
                       setShowProductDetailsModal(true);
                     }}
                   >
-                    info
+                    Edit
                   </button>
                   <button
                     onClick={() => {

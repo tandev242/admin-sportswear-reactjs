@@ -11,7 +11,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import OrderStatusCard from './components/OrderStatusCard';
 
-
 import "./style.scss";
 
 
@@ -43,20 +42,6 @@ export default function Order() {
                         <div className="title">
                             <h3>Order</h3>
                             <div>
-                                {/* <ButtonGroup size="sm" className="btn-group-payment-status">
-                                    <DropdownButton
-                                        className="dropdown-role" as={ButtonGroup}
-                                        title={`PStatus: all`}
-                                    // id="bg-nested-dropdown"
-                                    // onSelect={(e) => setType(e)}z
-                                    >
-                                        <Dropdown.Item eventKey="all">All</Dropdown.Item>
-                                        <Dropdown.Item eventKey="pending">pending</Dropdown.Item>
-                                        <Dropdown.Item eventKey="completed">completed</Dropdown.Item>
-                                        <Dropdown.Item eventKey="cancelled">cancelled</Dropdown.Item>
-                                        <Dropdown.Item eventKey="refund">refund</Dropdown.Item>
-                                    </DropdownButton>
-                                </ButtonGroup> */}
                                 <ButtonGroup size="sm" className="btn-group-order-status">
                                     <DropdownButton
                                         className="dropdown-role" as={ButtonGroup}

@@ -93,6 +93,27 @@ export const updateDiscount = (data) => {
   }
 }
 
+export const updateProduct = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: productConstants.UPDATE_PRODUCT_REQUEST });
+      const res = await axios.post(`/product/update`, data);
+      if (res.status === 202) {
+        dispatch({ type: productConstants.UPDATE_PRODUCT_SUCCESS });
+        dispatch(getProducts());
+      } else {
+        const { error } = res.data;
+        dispatch({
+          type: productConstants.UPDATE_PRODUCT_FAILURE,
+          payload: { error }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
 
 export const deleteProductById = (payload) => {
   return async (dispatch) => {

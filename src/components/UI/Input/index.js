@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 
 const Input = (props) => {
     let input = null;
-
+    console.log(props.type)
     switch (props.type) {
         case 'select':
             input = <Form.Group>
@@ -23,7 +23,23 @@ const Input = (props) => {
                 </select>
             </Form.Group>
             break;
-        case 'text':
+        case 'textarea':
+            input = <Form.Group>
+                {props.label && <Form.Label>{props.label}</Form.Label>}
+                <Form.Control
+                    type={props.type}
+                    placeholder={props.placeholder}
+                    value={props.value}
+                    as="textarea"
+                    rows={4}
+                    onChange={props.onChange}
+                    {...props}
+                />
+                <Form.Text className="text-muted">
+                    {props.errorMessage}
+                </Form.Text>
+            </Form.Group>
+            break;
         default:
             input = <Form.Group >
                 {props.label && <Form.Label>{props.label}</Form.Label>}

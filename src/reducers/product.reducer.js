@@ -10,14 +10,12 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case productConstants.GET_ALL_PRODUCTS_REQUEST:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: true,
             }
             break;
         case productConstants.GET_ALL_PRODUCTS_SUCCESS:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 products: action.payload.products,
@@ -25,7 +23,6 @@ export default (state = initialState, action) => {
             }
             break;
         case productConstants.GET_ALL_PRODUCTS_FAILURE:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: false,
@@ -33,21 +30,37 @@ export default (state = initialState, action) => {
             }
             break;
         case productConstants.UPDATE_DISCOUNT_REQUEST:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: true,
             }
             break;
         case productConstants.UPDATE_DISCOUNT_SUCCESS:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: false
             }
             break;
         case productConstants.UPDATE_DISCOUNT_FAILURE:
-            // console.log(action.payload.products);
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+            break;
+        case productConstants.UPDATE_PRODUCT_REQUEST:
+            state = {
+                ...state,
+                loading: true,
+            }
+            break;
+        case productConstants.UPDATE_PRODUCT_SUCCESS:
+            state = {
+                ...state,
+                loading: false
+            }
+            break;
+        case productConstants.UPDATE_PRODUCT_FAILURE:
             state = {
                 ...state,
                 loading: false,

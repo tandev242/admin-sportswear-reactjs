@@ -10,14 +10,12 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case userConstants.GET_ALL_USER_REQUEST:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: true,
             }
             break;
         case userConstants.GET_ALL_USER_SUCCESS:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 users: action.payload.users,
@@ -25,7 +23,6 @@ export default (state = initialState, action) => {
             }
             break;
         case userConstants.GET_ALL_USER_FAILURE:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: false,
@@ -34,21 +31,18 @@ export default (state = initialState, action) => {
             break;
 
         case userConstants.UPDATE_USER_REQUEST:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: true,
             }
             break;
         case userConstants.UPDATE_USER_SUCCESS:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: false,
             }
             break;
         case userConstants.UPDATE_USER_FAILURE:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: false,
@@ -56,21 +50,18 @@ export default (state = initialState, action) => {
             }
             break;
         case userConstants.DELETE_USER_REQUEST:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: true,
             }
             break;
         case userConstants.DELETE_USER_SUCCESS:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: false,
             }
             break;
         case userConstants.DELETE_USER_FAILURE:
-            // console.log(action.payload.products);
             state = {
                 ...state,
                 loading: false,

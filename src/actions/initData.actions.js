@@ -27,10 +27,6 @@ export const getInitData = () =>{
                 payload: { products }
             });
             await dispatch({
-                type: orderConstants.GET_ALL_ORDERS_SUCCESS,
-                payload: { orders }
-            });
-            await dispatch({
                 type: sizeConstants.GET_ALL_SIZE_SUCCESS,
                 payload: { sizes }
             })
