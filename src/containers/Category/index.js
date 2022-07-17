@@ -160,12 +160,16 @@ const Category = (props) => {
         expandedArray.forEach((item, index) => {
             form.append('_id', item.value);
             form.append('name', item.name);
-            form.append('parentId', item.parentId ? item.parentId : "");
+            if (item.parentId) {
+                form.append('parentId', item.parentId)
+            }
         });
         checkedArray.forEach((item, index) => {
             form.append('_id', item.value);
             form.append('name', item.name);
-            form.append('parentId', item.parentId ? item.parentId : "");
+            if (item.parentId) {
+                form.append('parentId', item.parentId)
+            }
         });
         dispatch(updateCategories(form));
         setUpdateCategoryModal(false);
