@@ -41,9 +41,10 @@ export const isUserLoggedIn = () => {
   return async (dispatch) => {
     const res = await axios.post(`/auth/isUserLoggedIn`);
     if (res.status === 200) {
+      const { user } = res.data;
       const accessToken = localStorage.getItem("accessToken");
       const refreshToken = localStorage.getItem("refreshToken");
-      const user = JSON.parse(localStorage.getItem("user"));
+      localStorage.setItem("user", JSON.stringify(user));
       dispatch({
         type: authConstants.LOGIN_SUCCESS,
         payload: { user, accessToken, refreshToken },
