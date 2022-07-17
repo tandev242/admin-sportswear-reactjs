@@ -2,9 +2,8 @@ import React, {useState} from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { signout } from "../../actions";
+import { signout, updateUser, isUserLoggedIn } from "../../actions";
 import EditUserModal from "../UserModal/EditUserModal"
-import { updateUser } from "../../actions";
 import './style.scss'
 function Header(props) {
 
@@ -23,8 +22,9 @@ function Header(props) {
         setInfoEdit(auth.user);
     }
 
-    const handleSubmitEditUser = () => {
-        dispatch(updateUser(infoEdit));
+    const handleSubmitEditUser = async () => {
+        await dispatch(updateUser(infoEdit))
+        await dispatch(isUserLoggedIn())
         setShowEdit(false);
         setInfoEdit("");
     }
